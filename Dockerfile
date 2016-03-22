@@ -2,8 +2,17 @@ FROM resin/rpi-raspbian:wheezy
 MAINTAINER ponteineptique <thibault.clerice[@]uni-leipzig.de>
 
 # Install required packages
-RUN apt-get update &&\
-	apt-get install git-core zlib1g-dev libxslt1-dev libxml2-dev python3.4-dev python3.4-venv python3-pip redis-server build-essential nginx supervisor -y
+RUN apt-get update && apt-get install -y \ 
+	git-core \
+	zlib1g-dev \
+	libxslt1-dev \
+	libxml2-dev \
+	python3.4-dev \
+	python3.4-venv \
+	python3-pip \
+	build-essential \
+	nginx \
+	supervisor
 
 # Clone required resources
 RUN mkdir data && /
@@ -44,3 +53,5 @@ RUN apt-get -y autoremove && \
 	rm -rf /var/lib/apt/lists/* && \
 	rm -rf /tmp/*
 
+# Define default command
+CMD ["bash"]
