@@ -2,31 +2,51 @@ FROM resin/rpi-raspbian:wheezy
 MAINTAINER ponteineptique <thibault.clerice[@]uni-leipzig.de>
 
 # Install required packages
-RUN apt-get update && apt-get install -y \ 
-	git-core \
-	zlib1g-dev \
-	libxslt1-dev \
-	libxml2-dev \
-	python3.4-dev \
-	python3.4-venv \
-	python3-pip \
-	build-essential \
-	nginx \
-	supervisor
+RUN DEBIAN_FRONTEND=noninteractive apt-get update --fix-missing
+
+# Install required packages
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+        git-core \
+        zlib1g-dev \
+        libxslt1-dev \
+        libxml2-dev \
+        python3 \
+        python3-dev \
+        python3-pip \
+        build-essential \
+        nginx \
+        supervisor \
+        redis-server
 
 # Clone required resources
-RUN mkdir data && /
-	git clone https://github.com/PerseusDL/canonical-latinLit.git
-RUN git clone https://github.com/Capitains/Nautilus.git
-RUN git clone https://github.com/Capitains/rpi-capitains-raspbian.git
+run mkdir /var/log/gunicorn
+
+WORKDIR /code/
+
+# Getting a corpus
+RUN apt-get install unzip
+RUN mkdir ./data
+ADD https://github.com/PerseusDL/canonical-latinLit/archive/master.zip ./data/canonical-latinLit.zip
+RUN cd ./data && unzip -q canonical-latinLit.zip
+
+# Debug
+RUN ls ./data
+
+# Cloning
+RUN git clone git://github.com/Capitains/Nautilus.git
+RUN git clone git://github.com/Capitains/rpi-capitains-raspbian.git
+
+# get python virtual env
 
 # Get the capitains packages
-RUN pyvenv-3.4 venv && \ 
-	cd Nautilus && \
-	venv/bin/python3.4 setup install && \
-	venv/bin/pip install flask_nemo && \
-	venv/bin/pip install gunicorn && \
-	venv/bin/pip install requests
+RUN curl -0 https://bootstrap.pypa.io/get-pip.py && \
+    python3 get-pip.py && \
+    pip3 install virtualenv
+
+RUN python3 Nautilus/setup.py install && \
+        pip3 install flask_nemo && \
+        pip3 install gunicorn && \
+        pip3 install requests
 
 # Stop supervisor service as we'll run it manually
 RUN service supervisor stop
