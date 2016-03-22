@@ -7,11 +7,11 @@ from werkzeug.contrib.cache import FileSystemCache
 from flask_cache import Cache
 
 app = Flask("Nautilus")
-nautilus_cache = FileSystemCache("/home/pi/cache")
+nautilus_cache = FileSystemCache("/code/cache")
 nautilus = FlaskNautilus(
     app=app,
     path="api/cts"
-    resources=["/home/pi/data/canonical-latinLit"],
+    resources=["/code/data/canonical-latinLit"],
     parser_cache=nautilus_cache,
     http_cache=Cache(config={'CACHE_TYPE': "simple"})
 )
