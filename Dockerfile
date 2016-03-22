@@ -16,7 +16,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
         build-essential \
         nginx \
         supervisor \
-        redis-server
+        redis-server \
+        unzip
 
 # Clone required resources
 run mkdir /var/log/gunicorn
