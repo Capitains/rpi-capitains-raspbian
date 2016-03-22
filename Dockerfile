@@ -1,4 +1,4 @@
-FROM armbuild/debian:jessie
+FROM resin/rpi-raspbian:wheezy
 MAINTAINER ponteineptique <thibault.clerice[@]uni-leipzig.de>
 
 # Install required packages
