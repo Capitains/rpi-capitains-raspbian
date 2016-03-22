@@ -39,8 +39,8 @@ RUN git clone git://github.com/Capitains/rpi-capitains-raspbian.git
 # get python virtual env
 
 # Get the capitains packages
-RUN curl -0 https://bootstrap.pypa.io/get-pip.py && \
-    python3 get-pip.py && \
+ADD https://bootstrap.pypa.io/get-pip.py get-pip.py
+RUN python3 get-pip.py && \
     pip3 install virtualenv
 
 RUN python3 Nautilus/setup.py install && \
