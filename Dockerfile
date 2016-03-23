@@ -36,6 +36,7 @@ RUN python3 Nautilus/setup.py install
 RUN pip3 install requests
 RUN pip3 install flask_nemo
 RUN pip3 install gunicorn
+RUN easy_install3 --upgrade pip
 RUN pip3 install supervisor-stdout
 
 # Expose Ports
