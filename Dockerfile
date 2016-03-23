@@ -31,9 +31,9 @@ RUN mkdir ./data
 RUN git clone git://github.com/Capitains/Nautilus.git
 
 # Get the capitains packages
-RUN python3 Nautilus/setup.py install
 
 RUN easy_install3 --upgrade pip
+RUN cd Nautilus && python3 setup.py install
 RUN pip3 install requests
 RUN pip3 install flask_nemo
 RUN pip3 install gunicorn
