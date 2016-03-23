@@ -38,7 +38,9 @@ RUN pip3 install requests
 RUN pip3 install flask_nemo
 RUN pip3 install gunicorn
 RUN pip3 install supervisor-stdout
-RUN apt-get install python-setuptools && easy_install pip && pip install supervisor-stdout
+
+# Required by supervisor which runs on python 2.7 apparently
+RUN apt-get install python-setuptools && easy_install pip && pip2.7 install supervisor-stdout
 
 # Expose Ports
 EXPOSE 5000
@@ -53,17 +55,19 @@ ADD ./nginx.conf /etc/nginx/nginx.conf
 ADD ./app.py ./app.py
 
 # restart nginx to load the config
-CMD service nginx stop
+RUN service nginx stop
 CMD ["nginx", "-g", "daemon off;"]
 
 ADD https://github.com/PerseusDL/canonical-latinLit/archive/master.zip ./data/canonical-latinLit.zip
 RUN cd ./data && unzip -q canonical-latinLit.zip
 
 # start supervisor to run our wsgi server
-CMD supervisord -c /etc/supervisord.conf -n
+RUN supervisord -c /etc/supervisord.conf -n
 
 # Clean up the distrib
 RUN apt-get -y autoremove && \
 	apt-get -y clean && \
 	rm -rf /var/lib/apt/lists/* && \
 	rm -rf /tmp/*
+
+CMD ["bash"]
