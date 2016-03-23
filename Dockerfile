@@ -11,13 +11,12 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
         libxml2-dev \
         python3 \
         python3-dev \
+        python3-pip \
         build-essential \
         nginx \
         supervisor \
         redis-server \
         unzip
-
-RUN easy_install3 -U pip
 
 # Clone required resources
 run mkdir /var/log/gunicorn
@@ -36,7 +35,7 @@ RUN git clone git://github.com/Capitains/rpi-capitains-raspbian.git
 RUN python3 Nautilus/setup.py install
 RUN pip3 install requests
 RUN pip3 install flask_nemo
-RUN pip3 pip3 install gunicorn
+RUN pip3 install gunicorn
 RUN pip3 install supervisor-stdout
 
 # Expose Ports
