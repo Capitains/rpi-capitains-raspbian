@@ -33,10 +33,11 @@ RUN git clone git://github.com/Capitains/rpi-capitains-raspbian.git
 
 # Get the capitains packages
 RUN python3 Nautilus/setup.py install
+
+RUN easy_install3 --upgrade pip
 RUN pip3 install requests
 RUN pip3 install flask_nemo
 RUN pip3 install gunicorn
-RUN easy_install3 --upgrade pip
 RUN pip3 install supervisor-stdout
 
 # Expose Ports
