@@ -62,7 +62,7 @@ ADD https://github.com/PerseusDL/canonical-latinLit/archive/master.zip ./data/ca
 RUN cd ./data && unzip -q canonical-latinLit.zip
 
 # start supervisor to run our wsgi server
-RUN supervisord -c /etc/supervisord.conf -n
+CMD supervisord -c /etc/supervisord.conf -n
 
 # Clean up the distrib
 RUN apt-get -y autoremove && \
