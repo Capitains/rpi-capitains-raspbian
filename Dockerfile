@@ -42,9 +42,6 @@ RUN pip3 install supervisor-stdout
 # Required by supervisor which runs on python 2.7 apparently
 RUN apt-get install python-setuptools && easy_install pip && pip2.7 install supervisor-stdout
 
-# Expose Ports
-EXPOSE 5000
-
 # Stop supervisor service as we'll run it manually
 RUN service supervisor stop
 RUN service nginx stop
@@ -62,6 +59,9 @@ RUN cd ./data && unzip -q canonical-latinLit.zip
 # start supervisor to run our wsgi server
 CMD ["nginx", "-g", "daemon off;"]
 CMD supervisord -c /etc/supervisord.conf -n
+
+# Expose right ports
+EXPOSE 80
 
 # Clean up the distrib
 RUN apt-get -y autoremove && \
