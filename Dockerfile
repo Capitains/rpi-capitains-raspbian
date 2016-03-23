@@ -47,6 +47,7 @@ EXPOSE 5000
 
 # Stop supervisor service as we'll run it manually
 RUN service supervisor stop
+RUN service nginx stop
 
 # Get the main app and configuration files
 # File management (everything after an ADD is uncached) so we do it as late as possible in the process.
@@ -54,14 +55,12 @@ ADD ./supervisord.conf /etc/supervisord.conf
 ADD ./nginx.conf /etc/nginx/nginx.conf
 ADD ./app.py ./app.py
 
-# restart nginx to load the config
-RUN service nginx stop
-CMD ["nginx", "-g", "daemon off;"]
 
 ADD https://github.com/PerseusDL/canonical-latinLit/archive/master.zip ./data/canonical-latinLit.zip
 RUN cd ./data && unzip -q canonical-latinLit.zip
 
 # start supervisor to run our wsgi server
+CMD ["nginx", "-g", "daemon off;"]
 CMD supervisord -c /etc/supervisord.conf -n
 
 # Clean up the distrib
