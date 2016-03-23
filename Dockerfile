@@ -38,7 +38,7 @@ RUN pip3 install requests
 RUN pip3 install flask_nemo
 RUN pip3 install gunicorn
 RUN pip3 install supervisor-stdout
-RUN easy_install pip && pip install supervisor-stdout
+RUN apt-get install python-setuptools && easy_install pip && pip install supervisor-stdout
 
 # Expose Ports
 EXPOSE 5000
