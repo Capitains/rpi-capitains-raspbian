@@ -29,7 +29,6 @@ RUN mkdir ./data
 
 # Cloning
 RUN git clone git://github.com/Capitains/Nautilus.git
-RUN git clone git://github.com/Capitains/rpi-capitains-raspbian.git
 
 # Get the capitains packages
 RUN python3 Nautilus/setup.py install
@@ -46,9 +45,11 @@ EXPOSE 5000
 # Stop supervisor service as we'll run it manually
 RUN service supervisor stop
 
-# file management, everything after an ADD is uncached, so we do it as late as possible in the process.
+# Get the main app and configuration files
+# File management (everything after an ADD is uncached) so we do it as late as possible in the process.
 ADD ./supervisord.conf /etc/supervisord.conf
 ADD ./nginx.conf /etc/nginx/nginx.conf
+ADD ./app.py ./app.py
 
 # restart nginx to load the config
 CMD service nginx stop
