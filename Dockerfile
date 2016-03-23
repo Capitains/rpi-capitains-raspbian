@@ -54,6 +54,9 @@ ADD ./nginx.conf /etc/nginx/nginx.conf
 CMD service nginx stop
 CMD ["nginx", "-g", "daemon off;"]
 
+ADD https://github.com/PerseusDL/canonical-latinLit/archive/master.zip ./data/canonical-latinLit.zip
+RUN cd ./data && unzip -q canonical-latinLit.zip
+
 # start supervisor to run our wsgi server
 CMD supervisord -c /etc/supervisord.conf -n
 
@@ -62,6 +65,3 @@ RUN apt-get -y autoremove && \
 	apt-get -y clean && \
 	rm -rf /var/lib/apt/lists/* && \
 	rm -rf /tmp/*
-
-# Define default command
-CMD ["bash"]

@@ -11,7 +11,7 @@ nautilus_cache = FileSystemCache("/code/cache")
 nautilus = FlaskNautilus(
     app=app,
     path="api/cts"
-    resources=["/code/data/canonical-latinLit"],
+    resources=["/code/data/canonical-latinLit-master"],
     parser_cache=nautilus_cache,
     http_cache=Cache(config={'CACHE_TYPE': "simple"})
 )
