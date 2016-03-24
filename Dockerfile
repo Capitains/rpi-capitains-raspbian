@@ -58,7 +58,7 @@ RUN cd ./data && unzip -q canonical-latinLit.zip
 
 # start supervisor to run our wsgi server
 CMD ["nginx", "-g", "daemon off;"]
-CMD supervisord -c /etc/supervisord.conf -n
+CMD ["supervisord", "-c", "/etc/supervisord.conf", "-n"]
 
 # Expose right ports
 EXPOSE 80
